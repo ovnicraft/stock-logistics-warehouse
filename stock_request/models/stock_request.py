@@ -245,7 +245,6 @@ class StockRequest(models.Model):
         move/po creation.
         """
         return {
-
             'name': self.name,
             'origin': self.name,
             'company_id': self.company_id.id,
@@ -256,7 +255,7 @@ class StockRequest(models.Model):
             'location_id': self.location_id.id,
             'warehouse_id': self.warehouse_id.id,
             'stock_request_allocation_ids': [(4, self.id)],
-            'group_id': group_id or self.procurement_group_id.id or False,
+            'group_id': group_id.id or self.procurement_group_id.id or False,
             'route_ids': [(4, self.route_id.id)],
             'stock_request_id': self.id,
         }
@@ -288,7 +287,7 @@ class StockRequest(models.Model):
                 continue
 
             values = request._prepare_procurement_values(
-                group_id=request.procurement_group_id)
+                group_id=request.order_id.procurement_group_id)
 
             procurement = self.env["procurement.order"].create(values)
             if procurement:

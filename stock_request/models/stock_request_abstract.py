@@ -78,7 +78,6 @@ class StockRequest(models.AbstractModel):
     )
     route_id = fields.Many2one('stock.location.route', string='Route',
                                ondelete='restrict')
-
     route_ids = fields.Many2many(
         'stock.location.route', string='Route',
         compute='_compute_route_ids',

@@ -11,6 +11,7 @@
                        groups="stock.group_stock_multi_locations"/>
                 <field name="location_id"
                        groups="stock.group_stock_multi_locations"/>
+		<field name="expected_date"/>
                 <field name="state"/>
             </tree>
         </field>
@@ -22,6 +23,12 @@
         <field name="arch" type="xml">
             <form string="Stock request">
                 <header>
+		    <button name="action_done_all"
+			    string="Realizado"
+			    type="object"
+			    states="open"
+			    groups="stock_request.group_stock_request_manager"
+			    />
                     <button name="action_confirm"
                             string="Confirm" type="object"
                             attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>

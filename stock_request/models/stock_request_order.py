@@ -190,6 +190,9 @@ class StockRequestOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
+        if not self.procurement_group_id:
+            proc = self.env['procurement.group'].create({'name': self.name})
+            self.procurement_group_id = proc.id
         for line in self.stock_request_ids:
             line.action_confirm()
         self.state = 'open'
@@ -206,6 +209,13 @@ class StockRequestOrder(models.Model):
             line.action_cancel()
         self.state = 'cancel'
         return True
+
+    @api.multi
+    def action_done_all(self):
+        for obj in self:
+            lines = obj.stock_request_ids.filtered(lambda r: r.state != 'done')
+            lines.state = 'done'
+            obj.action_done()
 
     def action_done(self):
         self.state = 'done'
