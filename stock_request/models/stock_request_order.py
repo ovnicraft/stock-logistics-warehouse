@@ -102,6 +102,10 @@ class StockRequestOrder(models.Model):
         compute='_compute_stock_request_count',
         readonly=True,
     )
+    route_id = fields.Many2one(
+        "stock.location.route",
+        string="Ruta"
+    )
 
     _sql_constraints = [
         ('name_uniq', 'unique(name, company_id)',
@@ -214,7 +218,8 @@ class StockRequestOrder(models.Model):
     def action_done_all(self):
         for obj in self:
             lines = obj.stock_request_ids.filtered(lambda r: r.state != 'done')
-            lines.state = 'done'
+            for l in lines:
+                l.state = 'done'
             obj.action_done()
 
     def action_done(self):

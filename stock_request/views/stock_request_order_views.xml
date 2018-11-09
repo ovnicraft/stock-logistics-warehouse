@@ -75,8 +75,10 @@
                         <group>
                             <field name="warehouse_id" widget="selection"
                                    groups="stock.group_stock_multi_locations"/>
-                            <field name="location_id"
+                            <field name="location_id" options="{'no_create': true, 'no_create_edit': true, 'no_open': true}" domain="[('usage','=','internal')]"
                                    groups="stock.group_stock_multi_locations"/>
+			    <field name="route_id" required="1" domain="[('pull_ids.location_id','=', location_id)]"
+				   options="{'no_create': true, 'no_create_edit': true, 'no_open': true}"/>
                             <field name="procurement_group_id"
                                    groups="stock.group_adv_location"/>
                             <field name="company_id"
@@ -94,6 +96,7 @@
                             'default_procurement_group_id': procurement_group_id,
                             'default_company_id': company_id,
                             'default_state': state,
+			    'default_route_id': route_id
                             }" attrs="{'readonly': [('state', '!=', 'draft')]}">
                                 <tree editable="bottom">
                                     <field name="name" readonly="1"/>
@@ -104,6 +107,7 @@
                                     <field name="route_ids" invisible="1"/>
                                     <field name="route_id"
                                            options="{'no_create': True}"
+					   invisible="1"
                                            groups="stock.group_stock_multi_locations"/>
                                     <field name="product_uom_qty"/>
                                     <field name="qty_in_progress"/>
