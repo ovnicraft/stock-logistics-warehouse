@@ -37,9 +37,14 @@
         name="Master Data"
         sequence="100"/>
 
-    <!-- menuitem id="menu_stock_request_config" name="Settings"
+    <menuitem id="menu_stock_request_config" name="Settings"
               parent="menu_stock_request_root"
-              sequence="999" action="action_stock_request_config"
-              groups="base.group_system"/ -->
+              sequence="999"
+              groups="stock_request.group_stock_request_manager"/>
+
+    <menuitem id="menu_stock_request_template" name="Plantillas de Stock"
+              parent="menu_stock_request_root"
+              action="action_stock_request_template"
+              />
 
 </odoo>

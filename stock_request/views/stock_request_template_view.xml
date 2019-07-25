@@ -1,0 +1,53 @@
+<odoo>
+    <record id="view_stock_request_template_tree" model="ir.ui.view">
+        <field name="name">stock.request.template.tree</field>
+        <field name="model">stock.request.template</field>
+        <field name="arch" type="xml">
+            <tree string="Plantillas">
+                <field name="name"/>
+                <field name="route_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_request_form" model="ir.ui.view">
+        <field name="name">stock.request.form</field>
+        <field name="model">stock.request</field>
+        <field name="arch" type="xml">
+            <form string="Plantilla">
+                <group>
+                    <field name="name"/>
+                    <field name="route_id"/>
+                </group>
+                <group string="Detalle">
+                    <field name="line_ids" nolabel="1">
+                        <tree editable="top">
+                            <field name="product_id"/>
+                            <field name="product_uom_id"/>
+                            <field name="product_uom_qty"/>
+                        </tree>
+                        <form>
+                            <field name="product_id"/>
+                            <field name="product_uom_id"/>
+                            <field name="product_uom_qty"/>
+                        </form>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_request_template" model="ir.actions.act_window">
+        <field name="name">Plantillas de Solicitudes</field>
+        <field name="res_model">stock.request.template</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+              Agrega tus plantillas de solicitudes
+          </p>
+        </field>
+    </record>
+
+</odoo>
