@@ -11,8 +11,8 @@
     </record>
 
     <record id="view_stock_request_form" model="ir.ui.view">
-        <field name="name">stock.request.form</field>
-        <field name="model">stock.request</field>
+        <field name="name">stock.request.template.form</field>
+        <field name="model">stock.request.template</field>
         <field name="arch" type="xml">
             <form string="Plantilla">
                 <group>
@@ -27,7 +27,7 @@
                             <field name="product_uom_qty"/>
                         </tree>
                         <form>
-                            <field name="product_id"/>
+                            <field name="product_id" domain="[('type','=','product')]"/>
                             <field name="product_uom_id"/>
                             <field name="product_uom_qty"/>
                         </form>
@@ -47,6 +47,18 @@
           <p class="oe_view_nocontent_create">
               Agrega tus plantillas de solicitudes
           </p>
+        </field>
+    </record>
+
+    <record id="view_stock_request_order_inh_form" model="ir.ui.view">
+        <field name="name">stock.request.order.form</field>
+        <field name="model">stock.request.order</field>
+        <field name="inherit_id" ref="stock_request_order_form"/>
+        <field name="arch" type="xml">
+            <field name="picking_policy" position="after">
+                <field name="template_id"/>
+                <button name="load_template" type="object" string="Cargar Plantilla" icon="fa-cogs"/>
+            </field>
         </field>
     </record>
 

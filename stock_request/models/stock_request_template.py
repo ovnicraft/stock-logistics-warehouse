@@ -51,4 +51,29 @@ class StockRequestTemplateLine(models.Model):
 class StockRequestOrder(models.Model):
     _inherit = "stock.request.order"
 
-    template_id = "stock.request.template"
+    template_id = fields.Many2one("stock.request.template", string="Plantilla")
+
+    @api.onchange("template_id")
+    def _onchange_template(self):
+        if self.template_id:
+            self.route_id = self.template_id.route_id
+
+    @api.multi
+    def load_template(self):
+        self.ensure_one()
+        self.stock_request_ids.unlink()
+        for line in self.template_id.line_ids:
+            data = {
+                "product_id": line.product_id.id,
+                "product_uom_id": line.product_uom_id.id,
+                "product_uom_qty": line.product_uom_qty,
+                "expected_date": self.expected_date,
+                "picking_policy": self.picking_policy,
+                "warehouse_id": self.warehouse_id.id,
+                "location_id": self.location_id.id,
+                "route_id": self.route_id.id,
+                "company_id": self.company_id.id,
+                "state": self.state,
+                "order_id": self.id,
+            }
+            self.env["stock.request"].create(data)
